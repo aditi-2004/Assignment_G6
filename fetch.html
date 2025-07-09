@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>API Cards</title>
+    <link rel="stylesheet" href="fetch.css">
+</head>
+
+<body>
+    <h1>Products</h1>
+    <div class="container" id="card-container">
+    </div>
+
+    <script>
+        fetch('https://dummyjson.com/products?limit=10')
+            .then(res => res.json())
+            .then(data => {
+                const container = document.getElementById('card-container');
+                data.products.forEach(product => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `
+            <img src="${product.thumbnail}" alt="${product.title}">
+            <h2>${product.title}</h2>
+            <p>$${product.price}</p> `;
+                    container.appendChild(card);
+                });
+            });
+    </script>
+</body>
+
+</html>
