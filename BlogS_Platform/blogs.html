@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Blogs by Category</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="blogs.html">Blogs</a>
+    <a href="admin.html">Admin</a>
+  </nav>
+
+  <h1>Blogs by Category</h1>
+  <input type="text" id="categorySearch" placeholder="Enter category..." />
+  <div id="blogsByCategory"></div>
+
+  <script src="data.js"></script>
+  <script>
+    const input = document.getElementById("categorySearch");
+    const container = document.getElementById("blogsByCategory");
+
+    let timeout;
+    input.addEventListener("input", () => {
+      clearTimeout(timeout);
+      timeout = setTimeout(() => {
+        let keyword = input.value.trim().toLowerCase();
+        let filtered = blogData.filter(b => b.category.toLowerCase().includes(keyword));
+        container.innerHTML = filtered.map(b => `
+          <div class="blog-card">
+            <h3>${b.title}</h3>
+            <p>${b.description}</p>
+            <p><strong>By:</strong> ${b.author} | <strong>Published:</strong> ${b.publishedBy}</p>
+            <a href="${b.url}" target="_blank">Read more</a>
+          </div>
+        `).join("");
+      }, 300);
+    });
+  </script>
+</body>
+</html>

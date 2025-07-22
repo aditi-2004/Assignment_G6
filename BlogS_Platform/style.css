@@ -1,0 +1,30 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f4f4f4;
+  padding: 20px;
+}
+nav {
+  background-color: #333;
+  padding: 10px;
+}
+nav a {
+  color: white;
+  margin-right: 10px;
+  text-decoration: none;
+}
+.blog-card {
+  background: white;
+  margin: 15px 0;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+input {
+  margin: 10px 5px;
+  padding: 8px;
+  width: 200px;
+}
+deleteButton{
+    background-color: #f44336;
+    color: white;
+}
