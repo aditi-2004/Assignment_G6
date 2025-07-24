@@ -1,0 +1,297 @@
+test> use Chitkara_G6
+switched to db Chitkara_G6
+Chitkara_G6> db.createCollection("student")
+{ ok: 1 }
+Chitkara_G6> show collections
+student
+Chitkara_G6> db.createCollection("user")
+{ ok: 1 }
+Chitkara_G6> db.createCollection("faculty")
+{ ok: 1 }
+Chitkara_G6> show collections
+faculty
+student
+user
+Chitkara_G6> db.student.inserOne({name:"Aditi",rollno:"101",stream:"CSE"})
+TypeError: db.student.inserOne is not a function
+Chitkara_G6> db.student.insertOne({name:"Aditi",rollno:"101",stream:"CSE"})
+{
+  acknowledged: true,
+  insertedId: ObjectId('6881cf36b77d7a33872710bc')
+}
+Chitkara_G6> db.student.insertOne({name:"Abhi",rollno:"102",stream:"CSE"})
+{
+  acknowledged: true,
+  insertedId: ObjectId('6881cf56b77d7a33872710bd')
+}
+Chitkara_G6> db.student.find().pretty()
+[
+  {
+    _id: ObjectId('6881cf36b77d7a33872710bc'),
+    name: 'Aditi',
+    rollno: '101',
+    stream: 'CSE'
+  },
+  {
+    _id: ObjectId('6881cf56b77d7a33872710bd'),
+    name: 'Abhi',
+    rollno: '102',
+    stream: 'CSE'
+  }
+]
+Chitkara_G6> db.student.insertMany([{ name: "Rahul", rollno: "G6-102", stream: "CSE", role: "student" },
+...   { name: "Neha", rollno: "G6-201", stream: "ECE", role: "faculty" }])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6881cfc0b77d7a33872710be'),
+    '1': ObjectId('6881cfc0b77d7a33872710bf')
+  }
+}
+Chitkara_G6> db.student.deleteMany({name:"Rahul"},{name:"Neha"})
+{ acknowledged: true, deletedCount: 1 }
+Chitkara_G6> db.student.find().pretty()
+[
+  {
+    _id: ObjectId('6881cf36b77d7a33872710bc'),
+    name: 'Aditi',
+    rollno: '101',
+    stream: 'CSE'
+  },
+  {
+    _id: ObjectId('6881cf56b77d7a33872710bd'),
+    name: 'Abhi',
+    rollno: '102',
+    stream: 'CSE'
+  },
+  {
+    _id: ObjectId('6881cfc0b77d7a33872710bf'),
+    name: 'Neha',
+    rollno: 'G6-201',
+    stream: 'ECE',
+    role: 'faculty'
+  }
+]
+Chitkara_G6> db.student.deleteMany({name:"Neha"})
+{ acknowledged: true, deletedCount: 1 }
+Chitkara_G6> db.student.find().pretty()
+[
+  {
+    _id: ObjectId('6881cf36b77d7a33872710bc'),
+    name: 'Aditi',
+    rollno: '101',
+    stream: 'CSE'
+  },
+  {
+    _id: ObjectId('6881cf56b77d7a33872710bd'),
+    name: 'Abhi',
+    rollno: '102',
+    stream: 'CSE'
+  }
+]
+Chitkara_G6> db.user.insertMany([
+...   { name: "Aditi", rollno: "G6-101", stream: "CSE", role: "student" },
+...   { name: "Rahul", rollno: "G6-102", stream: "CSE", role: "student" },
+...   { name: "Neha", rollno: "G6-201", stream: "ECE", role: "faculty" }
+... ])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6881d13ab77d7a33872710c0'),
+    '1': ObjectId('6881d13ab77d7a33872710c1'),
+    '2': ObjectId('6881d13ab77d7a33872710c2')
+  }
+}
+Chitkara_G6> db.faculty.insertMany([
+...   { name: "Neha", dept: "ECE", subject: "Digital Electronics" },
+...   { name: "Rajeev", dept: "CSE", subject: "Database Systems" }
+... ])
+{
+  acknowledged: true,
+  insertedIds: {
+    '0': ObjectId('6881d150b77d7a33872710c3'),
+    '1': ObjectId('6881d150b77d7a33872710c4')
+  }
+}
+Chitkara_G6> db.student.find().pretty()
+[
+  {
+    _id: ObjectId('6881cf36b77d7a33872710bc'),
+    name: 'Aditi',
+    rollno: '101',
+    stream: 'CSE'
+  },
+  {
+    _id: ObjectId('6881cf56b77d7a33872710bd'),
+    name: 'Abhi',
+    rollno: '102',
+    stream: 'CSE'
+  }
+]
+Chitkara_G6> db.user.find().pretty()
+[
+  {
+    _id: ObjectId('6881d13ab77d7a33872710c0'),
+    name: 'Aditi',
+    rollno: 'G6-101',
+    stream: 'CSE',
+    role: 'student'
+  },
+  {
+    _id: ObjectId('6881d13ab77d7a33872710c1'),
+    name: 'Rahul',
+    rollno: 'G6-102',
+    stream: 'CSE',
+    role: 'student'
+  },
+  {
+    _id: ObjectId('6881d13ab77d7a33872710c2'),
+    name: 'Neha',
+    rollno: 'G6-201',
+    stream: 'ECE',
+    role: 'faculty'
+  }
+]
+Chitkara_G6> db.faculty.find().pretty()
+[
+  {
+    _id: ObjectId('6881d150b77d7a33872710c3'),
+    name: 'Neha',
+    dept: 'ECE',
+    subject: 'Digital Electronics'
+  },
+  {
+    _id: ObjectId('6881d150b77d7a33872710c4'),
+    name: 'Rajeev',
+    dept: 'CSE',
+    subject: 'Database Systems'
+  }
+]
+Chitkara_G6> db.student.updateOne({name:"Aditi"},{$set:{stream:"AIML"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+Chitkara_G6> db.user.updateMany({role:"student"},{$set:{role:"Staff"}})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 2,
+  modifiedCount: 2,
+  upsertedCount: 0
+}
+Chitkara_G6> db.faculty.findOneAndUpdate({name:"Neha"},{$set:{dept:"CSE"}},{returnNewDocument : "after"})
+{
+  _id: ObjectId('6881d150b77d7a33872710c3'),
+  name: 'Neha',
+  dept: 'CSE',
+  subject: 'Digital Electronics'
+}
+Chitkara_G6> db.user.replaceOne({name:"Neha"},{name:"Neha Sharma",stream:"ECEE"})
+{
+  acknowledged: true,
+  insertedId: null,
+  matchedCount: 1,
+  modifiedCount: 1,
+  upsertedCount: 0
+}
+Chitkara_G6> db.student.find().pretty()
+[
+  {
+    _id: ObjectId('6881cf36b77d7a33872710bc'),
+    name: 'Aditi',
+    rollno: '101',
+    stream: 'AIML'
+  },
+  {
+    _id: ObjectId('6881cf56b77d7a33872710bd'),
+    name: 'Abhi',
+    rollno: '102',
+    stream: 'CSE'
+  }
+]
+Chitkara_G6> db.user.find().pretty()
+[
+  {
+    _id: ObjectId('6881d13ab77d7a33872710c0'),
+    name: 'Aditi',
+    rollno: 'G6-101',
+    stream: 'CSE',
+    role: 'Staff'
+  },
+  {
+    _id: ObjectId('6881d13ab77d7a33872710c1'),
+    name: 'Rahul',
+    rollno: 'G6-102',
+    stream: 'CSE',
+    role: 'Staff'
+  },
+  {
+    _id: ObjectId('6881d13ab77d7a33872710c2'),
+    name: 'Neha Sharma',
+    stream: 'ECEE'
+  }
+]
+Chitkara_G6> db.faculty.find().pretty()
+[
+  {
+    _id: ObjectId('6881d150b77d7a33872710c3'),
+    name: 'Neha',
+    dept: 'CSE',
+    subject: 'Digital Electronics'
+  },
+  {
+    _id: ObjectId('6881d150b77d7a33872710c4'),
+    name: 'Rajeev',
+    dept: 'CSE',
+    subject: 'Database Systems'
+  }
+]
+Chitkara_G6> db.student.countDocuments()
+2
+Chitkara_G6> db.faculty.countDocuments()
+2
+Chitkara_G6> db.student.find().sort({ name: 1 })
+[
+  {
+    _id: ObjectId('6881cf56b77d7a33872710bd'),
+    name: 'Abhi',
+    rollno: '102',
+    stream: 'CSE'
+  },
+  {
+    _id: ObjectId('6881cf36b77d7a33872710bc'),
+    name: 'Aditi',
+    rollno: '101',
+    stream: 'AIML'
+  }
+]
+Chitkara_G6> db.faculty.find().sort({ subject: 1 })
+[
+  {
+    _id: ObjectId('6881d150b77d7a33872710c4'),
+    name: 'Rajeev',
+    dept: 'CSE',
+    subject: 'Database Systems'
+  },
+  {
+    _id: ObjectId('6881d150b77d7a33872710c3'),
+    name: 'Neha',
+    dept: 'CSE',
+    subject: 'Digital Electronics'
+  }
+]
+Chitkara_G6> db.user.find({}, { name: 1, role: 1, _id: 0 })
+[
+  { name: 'Aditi', role: 'Staff' },
+  { name: 'Rahul', role: 'Staff' },
+  { name: 'Neha Sharma' }
+]
+Chitkara_G6> db.student.getIndexes()
+[ { v: 2, key: { _id: 1 }, name: '_id_' } ]
+Chitkara_G6> db.student.drop()
+true
+Chitkara_G6>
